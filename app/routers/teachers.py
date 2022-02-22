@@ -22,7 +22,7 @@ def create_teacher(teacher: TeacherBase, db: Session = Depends(get_db)):
         return new_teacher
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.get("/{teacher_id}")
@@ -32,7 +32,7 @@ def get_teacher(teacher_id: int, db: Session = Depends(get_db)):
             models.Teacher.id == teacher_id).first()
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.delete("/{teacher_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -53,7 +53,7 @@ def delete_teacher(teacher_id: int, db: Session = Depends(get_db)):
         db.commit()
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     else:
-        raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Can't delete this teacher because this teacher still has references in joint events table")
 
 

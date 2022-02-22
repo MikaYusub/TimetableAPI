@@ -23,7 +23,7 @@ def create_grade(grade: GradeBase, db: Session = Depends(get_db)):
         return new_grade
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.get("/{grade_id}")
@@ -33,7 +33,7 @@ def get_grade(grade_id: int, db: Session = Depends(get_db)):
             models.Grade.id == grade_id).first()
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.delete("/{grade_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -54,7 +54,7 @@ def delete_grade(grade_id: int, db: Session = Depends(get_db)):
         db.commit()
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     else:
-        raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Can't delete this grade because this grade still has references in joint events table")
 
 

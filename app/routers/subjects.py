@@ -23,7 +23,7 @@ def create_subject(subject: SubjectBase, db: Session = Depends(get_db)):
         return new_subject
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.get("/{subject_id}")
@@ -33,7 +33,7 @@ def get_subject(subject_id: int, db: Session = Depends(get_db)):
             models.Subject.id == subject_id).first()
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.delete("/{subject_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -54,7 +54,7 @@ def delete_subject(subject_id: int, db: Session = Depends(get_db)):
         db.commit()
         return Response(status_code=status.HTTP_204_NO_CONTENT)
     else:
-        raise HTTPException(status_code=status.HTTP_405_METHOD_NOT_ALLOWED,
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail="Can't delete this subject because this subject still has references in joint events table")
 
 

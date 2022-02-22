@@ -21,7 +21,7 @@ def create_event_item(tt: schemas.EventCreate, db: Session = Depends(get_db)):
         return new_event_obj
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.put("/event/{event_id}", status_code=status.HTTP_201_CREATED)
@@ -82,7 +82,7 @@ def get_timetable_for_teacher(teacher_id: int, db: Session = Depends(get_db)):
 
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.get("/grade/{grade_id}", response_model=List[schemas.Timetable])
@@ -98,7 +98,7 @@ def get_timetable_for_grade(grade_id: int, db: Session = Depends(get_db)):
 
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
 
 
 @router.get("/subject/{subject_id}", response_model=List[schemas.Timetable])
@@ -114,4 +114,4 @@ def get_timetable_for_subject(subject_id: int, db: Session = Depends(get_db)):
 
     except:
         raise HTTPException(
-            status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Invalid data")
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid data")
